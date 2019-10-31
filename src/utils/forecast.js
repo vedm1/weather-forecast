@@ -18,7 +18,16 @@ const forecast = (latitude, longitude, callback) => {
         } else if (response.body.error) {
             callback('Something Went Wrong, Please refresh and try again');
         } else {
-            callback(undefined, "You're currently in the " + response.body.timezone + ' Time Zone and It is ' + response.body.daily.data[0].summary + ' It is currently ' + response.body.currently.temperature + ' degrees ' + siUnit + '. There is ' + response.body.currently.precipProbability + '% chance of rain.')
+            callback(undefined, {
+                timezone: "You're currently in the " + response.body.timezone + ' Time Zone',
+                todayForecast: 'It is ' + response.body.daily.data[0].summary,
+                currentTemperature: 'It is currently ' + response.body.currently.temperature + ' degrees ' + siUnit,
+                chanceOfRain: 'There is ' + response.body.currently.precipProbability + '% chance of rain.',
+                tomorrowForecast: "It is forecast to be " + response.body.daily.data[1].summary,
+                tomorrowHigh: "Tomorrow's High would be " + response.body.daily.data[1].temperatureHigh + ' degrees ' + siUnit,
+                tomorrowLow: "Tomorrow's Low would be " + response.body.daily.data[1].temperatureLow + ' degrees ' + siUnit,
+                tomorrowChanceOfRain: 'There is ' + response.body.daily.data[1].precipProbability + '% chance of rain.'
+            });
         }
     });
 };
